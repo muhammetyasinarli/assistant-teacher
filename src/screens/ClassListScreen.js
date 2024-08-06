@@ -7,11 +7,14 @@ const ClassListScreen = ({ navigation }) => {
   const { classes, removeClass , editClass} = useContext(ClassContext);
   const [classList, setClassList] = useState([]);
 
-  const [editingClassId, setEditingClassId] = useState(null);
-  const [newClassName, setNewClassName] = useState('');
 
   useEffect(() => {
-    setClassList(classes);
+    const sortedClasses = [...classes].sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
+    setClassList(sortedClasses);
   }, [classes]);
 
   const handleRemoveClass = (classId) => {
@@ -25,16 +28,6 @@ const ClassListScreen = ({ navigation }) => {
 
   const handleEditClass = (classId) => {
     navigation.navigate('EditClass', { classId });
-  };
-
-  const handleSaveEdit = () => {
-    if (newClassName.trim() !== '') {
-      editClass(editingClassId, newClassName);
-      setEditingClassId(null);
-      setNewClassName('');
-    } else {
-      Alert.alert('Hata', 'Sınıf adı boş olamaz.');
-    }
   };
 
   const renderItem = ({ item }) => (
@@ -53,20 +46,6 @@ const ClassListScreen = ({ navigation }) => {
     </View>
   );
 
-  // return (
-  //   <View style={styles.container}>
-  //     <Text style={styles.header}>Sınıflarım</Text>
-  //     <FlatList
-  //       data={classList}
-  //       keyExtractor={(item) => item.id.toString()}
-  //       renderItem={renderItem}
-  //     />
-  //     <Button
-  //       title="Yeni Sınıf Ekle"
-  //       onPress={() => navigation.navigate('AddClass')}
-  //     />
-  //   </View>
-  // );
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Sınıflarım</Text>
@@ -76,6 +55,7 @@ const ClassListScreen = ({ navigation }) => {
         renderItem={renderItem}
       />
       <Button
+      styles={styles.saveButton}
         title="Yeni Sınıf Ekle"
         onPress={() => navigation.navigate('AddClass')}
       />
@@ -112,10 +92,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginBottom: 10,
-  },
-  editContainer: {
-    marginBottom: 20,
-  },
+  }
 });
 
 export default ClassListScreen;

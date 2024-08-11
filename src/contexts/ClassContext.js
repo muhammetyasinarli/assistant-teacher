@@ -30,7 +30,15 @@ export const ClassProvider = ({ children }) => {
   };
 
   const addClass = (className) => {
-    const newClass = { id: classes.length + 1, name: className, students: [] };
+
+    let newId = 1;
+    
+    if (classes.length > 0) {
+        const maxId = Math.max(...classes.map(cls => cls.id));
+        newId = maxId + 1;
+    }
+
+    const newClass = { id: newId, name: className.toUpperCase() , students: [] };
     const updatedClasses = [...classes, newClass];
     setClasses(updatedClasses);
     saveClasses(updatedClasses);
@@ -44,7 +52,7 @@ export const ClassProvider = ({ children }) => {
   
   const editClass = (classId, newName) => {
     const updatedClasses = classes.map((cls) =>
-      cls.id === classId ? { ...cls, name: newName } : cls
+      cls.id === classId ? { ...cls, name: newName.toUpperCase()  } : cls
     );
     setClasses(updatedClasses);
     saveClasses(updatedClasses);

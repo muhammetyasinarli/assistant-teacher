@@ -33,35 +33,19 @@ const ClassListScreen = ({ navigation }) => {
     navigation.navigate('EditClass', { classId });
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <TouchableOpacity onPress={() => handleClassPress(item.id)} style={styles.classItem}>
-        <Text style={styles.className}>{item.name}</Text>
-      </TouchableOpacity>
-      <View style={styles.actions}>
-        <TouchableOpacity onPress={() => handleEditClass(item.id)}>
-          <Icon name="edit" size={24} color="blue" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleRemoveClass(item.id)}>
-          <Icon name="delete" size={24} color="red" />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Sınıflarım</Text>
      <ListItem handleDetail={handleClassPress} 
               handleEdit={handleEditClass}
               handleRemove={handleRemoveClass} 
               itemData={classList}>
       </ListItem>
-      <Button
-      styles={styles.saveButton}
-        title="Yeni Sınıf Ekle"
-        onPress={() => navigation.navigate('AddClass')}
-      />
+       <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('AddClass')} >
+          <Icon name="plus-one" size={24} color="white" />
+          <Text style={styles.iconButtonText}>Yeni Sınıf Ekle</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -69,6 +53,7 @@ const ClassListScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    flex:1
   },
   header: {
     fontSize: 20,
@@ -95,7 +80,27 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginBottom: 10,
-  }
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 20,
+    
+  },
+  iconButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007bff',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10, // Butonlar arasına boşluk ekler
+  },
+  iconButtonText: {
+    marginLeft: 10,
+    color: 'white',
+    fontSize: 17,
+  },
 });
 
 export default ClassListScreen;

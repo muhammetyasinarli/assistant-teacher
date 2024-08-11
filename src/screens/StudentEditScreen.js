@@ -6,7 +6,7 @@ import EditItem from '../components/EditItem'
 
 const StudentEditScreen = ({ route, navigation }) => {
   const { studentId } = route.params;
-  const { students, setStudents } = useContext(StudentContext);
+  const { students, setStudents, editStudent } = useContext(StudentContext);
   const [student, setStudent] = useState(null);
   const [name, setName] = useState('');
 
@@ -20,7 +20,8 @@ const StudentEditScreen = ({ route, navigation }) => {
     const updatedStudents = students.map(s => 
       s.id === studentId ? { ...s, name } : s
     );
-    setStudents(updatedStudents);
+    editStudent(studentId,name);
+    // setStudents(updatedStudents);
     navigation.goBack();
   };
 

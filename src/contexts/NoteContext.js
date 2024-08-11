@@ -32,7 +32,15 @@ export const NoteProvider = ({ children }) => {
 
   const addNote = (studentId, note) => {
 
-    const newNote = { id: notes.length + 1, studentId, name : note };
+    let newId = 1;
+    
+    if (notes.length > 0) {
+        const maxId = Math.max(...notes.map(cls => cls.id));
+        newId = maxId + 1;
+    }
+
+
+    const newNote = { id: newId, studentId, name : note };
     const updatedNotes = [...notes, newNote];
     setNotes(updatedNotes);
     saveNotes(updatedNotes);
@@ -46,7 +54,7 @@ export const NoteProvider = ({ children }) => {
   };
 
   return (
-    <NoteContext.Provider value={{ notes, addNote,removeNote, setNotes }}>
+    <NoteContext.Provider value={{ notes, addNote,removeNote, setNotes , saveNotes}}>
       {children}
     </NoteContext.Provider>
   );

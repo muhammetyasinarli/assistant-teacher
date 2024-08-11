@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { StudentContext } from '../contexts/StudentContext';
 import { NoteContext } from '../contexts/NoteContext';
 import { useNavigation } from '@react-navigation/native';
 import ListItem from '../components/ListItem'
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const StudentDetailScreen = ({ route }) => {
 
   const { studentId } = route.params;
   const { students } = useContext(StudentContext);
   const { notes, removeNote } = useContext(NoteContext);
+  
   const [student, setStudent] = useState(null);
 
   const navigation = useNavigation(); 
@@ -43,13 +45,18 @@ const StudentDetailScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{student.name} Notları</Text>
+      <Text style={styles.header}>{student.name} NOTLARI</Text>
       <ListItem handleDetail={handleEditNote} 
               handleEdit={handleEditNote}
               handleRemove={handleRemoveNote} 
               itemData={studentNotes}>
       </ListItem>
-    <Button title="Not Ekle" onPress={() => navigation.navigate('AddNote', { studentId })} />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate('AddNote', { studentId })} >
+          <Icon name="plus-one" size={24} color="white" />
+          <Text style={styles.iconButtonText}>Yeni Not Ekle</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -71,6 +78,25 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginBottom: 10,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  iconButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007bff',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10, // Butonlar arasına boşluk ekler
+  },
+  iconButtonText: {
+    marginLeft: 10,
+    color: 'white',
+    fontSize: 17,
   },
 });
 

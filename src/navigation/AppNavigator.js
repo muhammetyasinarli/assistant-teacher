@@ -15,15 +15,15 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="ClassList">
-      <Stack.Screen name="ClassList" component={ClassListScreen} options={{ title: 'Sınıflar' }} />
-      <Stack.Screen name="ClassDetail" component={ClassDetailScreen} options={{ title: 'Sınıf Detayları' }} />
-      <Stack.Screen name="StudentDetail" component={StudentDetailScreen} options={{ title: 'Öğrenci Detayları' }} />
-      <Stack.Screen name="AddClass" component={AddClassScreen} options={{ title: 'Sınıf Ekle' }} />
-      <Stack.Screen name="AddStudent" component={AddStudentScreen} options={{ title: 'Öğrenci Ekle' }} />
-      <Stack.Screen name="AddNote" component={AddNoteScreen} options={{ title: 'Not Ekle' }} />
-      <Stack.Screen name="EditClass" component={EditClassScreen} options={{ title: 'Sınıfı Düzenle' }} /> 
-      <Stack.Screen name="StudentEdit" component={StudentEditScreen} options={{ title: 'Öğrenci Düzenle' }} /> 
-      <Stack.Screen name="EditNote" component={EditNoteScreen} options={{ title: 'Not Düzenle' }} /> 
+      <Stack.Screen name="ClassList" component={ClassListScreen} options={{ title: 'SINIFLAR' }} />
+      <Stack.Screen name="ClassDetail" component={ClassDetailScreen} options={{ title: 'SINIF DETAYLARI' }} />
+      <Stack.Screen name="StudentDetail" component={StudentDetailScreen} options={{ title: 'ÖĞRENCİ DETAYLARI' }} />
+      <Stack.Screen name="AddClass" component={AddClassScreen} options={{ title: 'SINIF EKLE' }} />
+      <Stack.Screen name="AddStudent" component={AddStudentScreen} options={{ title: 'ÖĞRENCİ EKLE' }} />
+      <Stack.Screen name="AddNote" component={AddNoteScreen} options={{ title: 'NOT EKLE' }} />
+      <Stack.Screen name="EditClass" component={EditClassScreen} options={{ title: 'SINIFI DÜZENLE' }} /> 
+      <Stack.Screen name="StudentEdit" component={StudentEditScreen} options={{ title: 'ÖĞRENCİ DÜZENLE' }} /> 
+      <Stack.Screen name="EditNote" component={EditNoteScreen} options={{ title: 'NOT DÜZENLE' }} /> 
     </Stack.Navigator>
   );
 };

@@ -1,10 +1,12 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect ,useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NoteContext } from './NoteContext'; 
 
 export const StudentContext = createContext();
 
 export const StudentProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
+  const { notes, setNotes, saveNotes } = useContext(NoteContext); 
 
   useEffect(() => {
     const loadStudents = async () => {
@@ -30,8 +32,24 @@ export const StudentProvider = ({ children }) => {
   };
 
   const addStudent = (classId, studentName) => {
-    const newStudent = { id: students.length + 1, name: studentName, classId };
+
+    let newId = 1;
+    
+    if (students.length > 0) {
+        const maxId = Math.max(...students.map(cls => cls.id));
+        newId = maxId + 1;
+    }
+
+    const newStudent = { id: newId, name: studentName.toUpperCase() , classId };
     const updatedStudents = [...students, newStudent];
+    setStudents(updatedStudents);
+    saveStudents(updatedStudents);
+  };
+
+  const editStudent = (studentId,studentName) => {
+    const updatedStudents = students.map((s) =>
+      s.id === studentId ? { ...s, name: studentName.toUpperCase()  } : s
+    );
     setStudents(updatedStudents);
     saveStudents(updatedStudents);
   };
@@ -40,10 +58,15 @@ export const StudentProvider = ({ children }) => {
     const updatedStudents= students.filter((cls) => cls.id !== studentId);
     setStudents(updatedStudents);
     saveStudents(updatedStudents);
+
+       // İlgili notları sil
+       const updatedNotes = notes.filter((note) => note.studentId !== studentId);
+       setNotes(updatedNotes);
+       saveNotes(updatedNotes);
   };
 
   return (
-    <StudentContext.Provider value={{ students, addStudent, removeStudent , setStudents}}>
+    <StudentContext.Provider value={{ students, addStudent, removeStudent , setStudents, editStudent}}>
       {children}
     </StudentContext.Provider>
   );

@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { ClassContext } from '../contexts/ClassContext';
+import NewItem from '../components/NewItem'
 
 const AddClassScreen = ({ navigation }) => {
   const { addClass } = useContext(ClassContext);
   const [className, setClassName] = useState('');
 
   const handleAddClass = () => {
+
     if (className.trim()) {
       addClass(className);
       setClassName('');
@@ -17,35 +19,9 @@ const AddClassScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Yeni Sınıf Ekle</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Sınıf adı"
-        value={className}
-        onChangeText={setClassName}
-      />
-      <Button title="Ekle" onPress={handleAddClass} />
-    </View>
+    <NewItem  itemName ={className} setItemName={setClassName} onSubmit={handleAddClass} placeholder="Şube adı giriniz"></NewItem>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 20,
-  },
-});
 
 export default AddClassScreen;

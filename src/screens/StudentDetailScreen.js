@@ -3,15 +3,14 @@ import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-nativ
 import { StudentContext } from '../contexts/StudentContext';
 import { NoteContext } from '../contexts/NoteContext';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import ListItem from '../components/ListItem'
 
 const StudentDetailScreen = ({ route }) => {
 
   const { studentId } = route.params;
   const { students } = useContext(StudentContext);
-  const { notes, addNote } = useContext(NoteContext);
+  const { notes, removeNote } = useContext(NoteContext);
   const [student, setStudent] = useState(null);
-  const [noteText, setNoteText] = useState('');
 
   const navigation = useNavigation(); 
 
@@ -31,31 +30,26 @@ const StudentDetailScreen = ({ route }) => {
     );
   }
 
-  const handleAddNote = () => {
-    debugger;
-     navigation.navigate('AddNote', { studentId }); 
-  };
-
-  const handleEditStudent = () => {
-    navigation.navigate('StudentEdit', { studentId });
-  };
-
   const studentNotes = notes.filter(note => note.studentId === student.id);
+
+  const handleRemoveNote = (noteId) => {
+    removeNote(noteId);
+    navigation.navigate('StudentDetail', { studentId });
+  };
+
+  const handleEditNote = (noteId) => {
+    navigation.navigate('EditNote', { noteId });
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{student.name} Notları</Text>
-      <FlatList
-        data={studentNotes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.noteItem}>
-            <Text>{item.note}</Text>
-          </View>
-        )}
-      />
-
-<Button title="Not Ekle" onPress={() => navigation.navigate('AddNote', { studentId })} />
+      <ListItem handleDetail={handleEditNote} 
+              handleEdit={handleEditNote}
+              handleRemove={handleRemoveNote} 
+              itemData={studentNotes}>
+      </ListItem>
+    <Button title="Not Ekle" onPress={() => navigation.navigate('AddNote', { studentId })} />
     </View>
   );
 };

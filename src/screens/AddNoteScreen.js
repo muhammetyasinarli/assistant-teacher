@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { NoteContext } from '../contexts/NoteContext';
+import NewItem from '../components/NewItem'
 
 const AddNoteScreen = ({ route, navigation }) => {
   const { studentId } = route.params; // route.params.studentId ile studentId değerini alıyoruz
@@ -18,35 +19,10 @@ const AddNoteScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Yeni Not Ekle</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Notunuzu buraya girin"
-        value={noteText}
-        onChangeText={setNoteText}
-      />
-      <Button title="Not Ekle" onPress={handleAddNote} />
-    </View>
+    <NewItem  itemName ={noteText} setItemName={setNoteText} onSubmit={handleAddNote} placeholder="Not giriniz"></NewItem>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 20,
-  },
-});
+
 
 export default AddNoteScreen;

@@ -8,6 +8,7 @@ import AddStudentScreen from '../screens/AddStudentScreen'
 import AddNoteScreen from '../screens/AddNoteScreen'
 import EditClassScreen from '../screens/EditClassScreen';
 import StudentEditScreen from '../screens/StudentEditScreen';
+import EditNoteScreen from '../screens/EditNoteScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const AppNavigator = () => {
       <Stack.Screen name="AddNote" component={AddNoteScreen} options={{ title: 'Not Ekle' }} />
       <Stack.Screen name="EditClass" component={EditClassScreen} options={{ title: 'Sınıfı Düzenle' }} /> 
       <Stack.Screen name="StudentEdit" component={StudentEditScreen} options={{ title: 'Öğrenci Düzenle' }} /> 
+      <Stack.Screen name="EditNote" component={EditNoteScreen} options={{ title: 'Not Düzenle' }} /> 
     </Stack.Navigator>
   );
 };

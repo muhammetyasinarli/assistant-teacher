@@ -22,6 +22,7 @@ export const NoteProvider = ({ children }) => {
   }, []);
 
   const saveNotes = async (notes) => {
+   
     try {
       await AsyncStorage.setItem('notes', JSON.stringify(notes));
     } catch (error) {
@@ -30,15 +31,22 @@ export const NoteProvider = ({ children }) => {
   };
 
   const addNote = (studentId, note) => {
-    debugger;
-    const newNote = { id: notes.length + 1, studentId, note };
+
+    const newNote = { id: notes.length + 1, studentId, name : note };
     const updatedNotes = [...notes, newNote];
     setNotes(updatedNotes);
     saveNotes(updatedNotes);
   };
 
+  const removeNote = (noteId) => {
+
+    const updatedNotes= notes.filter((n) => n.id !== noteId);
+    setNotes(updatedNotes);
+    saveNotes(updatedNotes);
+  };
+
   return (
-    <NoteContext.Provider value={{ notes, addNote }}>
+    <NoteContext.Provider value={{ notes, addNote,removeNote, setNotes }}>
       {children}
     </NoteContext.Provider>
   );

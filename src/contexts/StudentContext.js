@@ -23,7 +23,6 @@ export const StudentProvider = ({ children }) => {
 
   const saveStudents = async (students) => {
     try {
-      debugger;
       await AsyncStorage.setItem('students', JSON.stringify(students));
     } catch (error) {
       console.error('Failed to save students to AsyncStorage:', error);
@@ -38,7 +37,6 @@ export const StudentProvider = ({ children }) => {
   };
 
   const removeStudent = (studentId) => {
-    debugger;
     const updatedStudents= students.filter((cls) => cls.id !== studentId);
     setStudents(updatedStudents);
     saveStudents(updatedStudents);

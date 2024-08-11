@@ -1,9 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Alert,TextInput  } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity  } from 'react-native';
 import { ClassContext } from '../contexts/ClassContext';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ListItem from '../components/ListItem'
+
 
 const ClassListScreen = ({ navigation }) => {
+
   const { classes, removeClass , editClass} = useContext(ClassContext);
   const [classList, setClassList] = useState([]);
 
@@ -49,11 +52,11 @@ const ClassListScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Sınıflarım</Text>
-      <FlatList
-        data={classList}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderItem}
-      />
+     <ListItem handleDetail={handleClassPress} 
+              handleEdit={handleEditClass}
+              handleRemove={handleRemoveClass} 
+              itemData={classList}>
+      </ListItem>
       <Button
       styles={styles.saveButton}
         title="Yeni Sınıf Ekle"

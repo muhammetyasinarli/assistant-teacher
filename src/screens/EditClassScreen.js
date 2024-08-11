@@ -1,7 +1,8 @@
 // EditClassScreen.js
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { ClassContext } from '../contexts/ClassContext';
+import EditItem from '../components/EditItem'
 
 const EditClassScreen = ({ route, navigation }) => {
   const { classId } = route.params;
@@ -25,35 +26,10 @@ const EditClassScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Sınıfı Düzenle</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Sınıf adını girin"
-        value={className}
-        onChangeText={setClassName}
-      />
-      <Button title="Kaydet" onPress={handleSaveEdit} />
-    </View>
+    <EditItem itemName ={className} setItemName={setClassName} onSubmit={handleSaveEdit} placeholder="Şube adı giriniz"></EditItem>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 20,
-  },
-});
+
 
 export default EditClassScreen;

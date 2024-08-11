@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
 import { ClassContext } from '../contexts/ClassContext';
 import { StudentContext } from '../contexts/StudentContext';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import ListItem from '../components/ListItem'
 
 const ClassDetailScreen = ({ route, navigation }) => {
 
   const { classId } = route.params;
   const { classes } = useContext(ClassContext);
-  const { students, addStudent, removeStudent } = useContext(StudentContext);
+  const { students, removeStudent } = useContext(StudentContext);
   const [classStudents, setClassStudents] = useState([]);
 
   
@@ -33,53 +33,14 @@ const ClassDetailScreen = ({ route, navigation }) => {
     navigation.navigate('StudentEdit', { studentId });
   };
 
-//   const renderItem = ({ item }) => (
-//     <View style={styles.itemContainer}>
-//        <TouchableOpacity onPress={() => handleStudentPress(item.id)} style={styles.studentItem}>
-//             <Text>{item.name}</Text>
-//           </TouchableOpacity>
-//       <TouchableOpacity onPress={() => handleRemoveStudent(item.id)}>
-//         <Icon name="delete" size={24} color="red" />
-//       </TouchableOpacity>
-//     </View>
-//   );
-
-const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <TouchableOpacity onPress={() => handleStudentPress(item.id)} style={styles.studentItem}>
-        <Text>{item.name}</Text>
-      </TouchableOpacity>
-      <View style={styles.iconsContainer}>
-        <TouchableOpacity onPress={() => handleEditStudent(item.id)} style={styles.icon}>
-          <Icon name="edit" size={24} color="blue" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleRemoveStudent(item.id)} style={styles.icon}>
-          <Icon name="delete" size={24} color="red" />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.header}>{classes.find((cls) => cls.id === classId)?.name} Detayları</Text>
-//       <FlatList
-//         data={classStudents}
-//         keyExtractor={(item) => item.id.toString()}
-//         renderItem={renderItem}
-//       />
-//       <Button title="Öğrenci Ekle" onPress={() => navigation.navigate('AddStudent', { classId })} />
-      
-//     </View>
-//   );
 return (
     <View style={styles.container}>
       <Text style={styles.header}>{classes.find((cls) => cls.id === classId)?.name} Detayları</Text>
-      <FlatList
-        data={classStudents}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderItem}
-      />
+      <ListItem handleDetail={handleStudentPress} 
+              handleEdit={handleEditStudent}
+              handleRemove={handleRemoveStudent} 
+              itemData={classStudents}>
+      </ListItem>
       <Button title="Öğrenci Ekle" onPress={() => navigation.navigate('AddStudent', { classId })} />
     </View>
   );

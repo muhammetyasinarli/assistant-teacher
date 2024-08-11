@@ -1,7 +1,8 @@
 // StudentEditScreen.js
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { StudentContext } from '../contexts/StudentContext';
+import EditItem from '../components/EditItem'
 
 const StudentEditScreen = ({ route, navigation }) => {
   const { studentId } = route.params;
@@ -32,31 +33,13 @@ const StudentEditScreen = ({ route, navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Öğrenci Güncelle</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={setName}
-      />
-      <Button title="Kaydet" onPress={handleSave} />
-    </View>
+    <EditItem itemName ={name} setItemName={setName} onSubmit={handleSave} placeholder="Öğrenci adı giriniz"></EditItem>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-  },
-  header: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
   },
 });
 
